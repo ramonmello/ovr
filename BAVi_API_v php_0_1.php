@@ -224,16 +224,16 @@
 	/*
 		Example of Usage
 	*/
-	$test = new BAViRequest;
-	$test->put("content", "http://va05-cps.rnp.br/riotransfer/rnp/treinamentos/videoaulas/modulo_3/modulo_3.mp4");
-	$test->put("idservice", "VideoTeste");
-	$test->put("idmedia", "videoaula@RNP");
-	$test->put("version", "php_0.1");
-	$test->addMetadata("keyword", "noticia");
-	$apiTest = new BAViClient("http://138.121.71.4:8082/");
-	echo $apiTest->send($test,TRANSCRIPTION_ANNOTATION_AND_RECOMMENDATION, false);
-	echo "<br><br>";
-	echo $apiTest->request($test);
+	// $test = new BAViRequest;
+	// $test->put("content", "http://va05-cps.rnp.br/riotransfer/rnp/treinamentos/videoaulas/modulo_3/modulo_3.mp4");
+	// $test->put("idservice", "VideoTeste");
+	// $test->put("idmedia", "videoaula@RNP");
+	// $test->put("version", "php_0.1");
+	// $test->addMetadata("keyword", "noticia");
+	// $apiTest = new BAViClient("http://138.121.71.4:8082/");
+	// echo $apiTest->send($test,TRANSCRIPTION_ANNOTATION_AND_RECOMMENDATION, false);
+	// echo "<br><br>";
+	// echo $apiTest->request($test);
 		// $test2 = new BAViRequest;
 		// $test2->put("content", "http://va05-cps.rnp.br/riotransfer/rnp/treinamentos/videoaulas/modulo_3/modulo_3.mp4");
 		// $test2->put("idservice", "VideoTeste");
