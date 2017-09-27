@@ -220,6 +220,7 @@
 		This class is used to represent a BAVi request to the server.
 		
 		@author Miguel Alvim
+		@version 0.2
 	*/
 	class BAViRequest{
 		private $JSON;	
@@ -273,6 +274,7 @@
 		This class is used to represent a BAVi query to the server.
 		
 		@author Miguel Alvim
+		@version 0.2
 	*/
 	class BAViQuery{
 		private $Params;	
