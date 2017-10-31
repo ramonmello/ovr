@@ -94,7 +94,17 @@ $api= new BAViClient("http://138.121.71.4:8082/","ServidorRest");
 $resultado =  $api->query($query,1);
 $arrayResult =  json_decode($resultado ,true);
 	foreach($arrayResult["results"]["bindings"] as $key => $value){
-		echo $OUTPUT->heading(format_string($arrayResult["results"]["bindings"][$key]["link"]["value"]."<br>"));
+    $url = $arrayResult["results"]["bindings"][$key]["link"]["value"];
+    echo "<a href='".$url."'>";
+    echo $url."<br>";
+
+
+
+    //echo a;
+//  echo  "<a href=". $OUTPUT->heading(format_string($arrayResult["results"]["bindings"][$key]["link"]["value"]."<br>")) . ">"$OUTPUT->heading(format_string($arrayResult["results"]["bindings"][$key]["link"]["value"]."<br>"))"</a><br>";
+
+
+
   }
 
 //echo $OUTPUT->heading(format_string($resultado));
