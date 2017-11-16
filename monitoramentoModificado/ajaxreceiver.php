@@ -10,7 +10,7 @@
 	$arrayResult =  json_decode($resultado ,true);
 	$retorno = "";
 		foreach($arrayResult["results"]["bindings"] as $key => $value){
-			$retorno = $retorno." ". $arrayResult["results"]["bindings"][$key]["link"]["value"];
+			$retorno = $arrayResult["results"]["bindings"][$key]["link"]["value"];
 	 	}
 	echo $retorno;
 ?>

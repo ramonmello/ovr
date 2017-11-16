@@ -130,6 +130,14 @@ echo $OUTPUT->heading('Vídeo Aulas');
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           alert(this.responseText);
+          var aux ="";
+          for(var i=0;i <1; ++i){
+             aux = aux+
+            "<video width='400' controls>"+
+            "<source src="+this.responseText+" type='video/mp4'></video>"+
+            "<input type='checkbox' name='your-group' id='combo"+i+"'/> Selecionar";
+          }
+          document.getElementById('videos').innerHTML = aux;
        }
     };
     xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
@@ -142,6 +150,9 @@ echo $OUTPUT->heading('Vídeo Aulas');
   <input type="text" name="pesquisa" id='textBusca'><br>
   <button type="button" onclick="bttBusca()">Buscar</button>
 
+  <div id="videos">
+    
+  </div>
 
 
 
