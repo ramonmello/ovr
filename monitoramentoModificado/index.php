@@ -137,7 +137,7 @@ echo $OUTPUT->heading('Vídeo Aulas');
           // Criação de um lupe para cada comandod e busca
           for(var i=0;i <json.length; ++i){
              aux = aux+
-            "<input type='checkbox' name='your-group' id='combo"+i+"' /></br>"+
+            "<br><input type='checkbox' name='your-group' id='combo"+i+"' />"+
             "<video width='400' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video>";
           }
           document.getElementById('videos').innerHTML = aux;
@@ -172,7 +172,7 @@ echo $OUTPUT->heading('Vídeo Aulas');
       <input type="search" name="pesquisa" id='textBusca'">
       <button type="button" onclick="bttBusca()">Buscar</button> <!-- Botão via JS que busca resultados pela API--> 
       <button type="button" onclick="bttSubmit()">Submit</button>      
-    <div>
+    </div>
   
    
   <div id="videos">
