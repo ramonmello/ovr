@@ -1,16 +1,16 @@
 <?php
-
 /**
 * RELATÓRIO DE MONITORAMENTO SAEB 2017
 * Página Principal
 * Última atualização: 26/10/2017
 */
 
-
 //require $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once('../../config.php');
 //require_once($CFG->dirroot . '/my/lib.php');
 require __DIR__ . '/ZaraFunctions.php';
+// requerimento de css
+require_once ('styles.css');
 
 // VARIÁVEIS GLOBAIS
 global $PAGE;
@@ -124,34 +124,61 @@ echo $OUTPUT->heading('Vídeo Aulas');
   <source src="http://138.121.71.4/material_1/aula001_testeapi.mp4" type="video/mp4">
   Your browser does not support HTML5 video.
 </video> --> 
+
+
+<!--script para a funcionalidade do botao de busca -->
 <script type="text/javascript">
   function bttBusca(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          alert(this.responseText);
-          var aux ="";
-          for(var i=0;i <1; ++i){
+          var json = JSON.parse(this.responseText);
+          var aux =""
+          // Criação de um lupe para cada comandod e busca
+          for(var i=0;i <json.length; ++i){
              aux = aux+
-            "<video width='400' controls>"+
-            "<source src="+this.responseText+" type='video/mp4'></video>"+
-            "<input type='checkbox' name='your-group' id='combo"+i+"'/> Selecionar";
+            "<input type='checkbox' name='your-group' id='combo"+i+"' /></br>"+
+            "<video width='400' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video>";
           }
           document.getElementById('videos').innerHTML = aux;
        }
     };
+    //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
     xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
     xhttp.send();
   }
-  
+
+  function bttSubmit(){
+    var videos = new Array();
+    for (var i =0; ;++i){
+      var box = document.getElementById('combo'+i);
+      if (box != null){
+        if (box.checked ){
+          videos.push(document.getElementById('comboVideo'+i));
+        }
+      }else{
+        break;
+      }
+    }
+    for( var i = 0; i<videos.length; ++i){
+      alert (videos[i].src);
+    }
+  }
 </script>
 
-  Pesquisa:<br>
-  <input type="text" name="pesquisa" id='textBusca'><br>
-  <button type="button" onclick="bttBusca()">Buscar</button>
-
+  <!-- area de recebimento dados usuario --> 
+    <div class="pesq">
+      <h5> Pesquisa:</h5><br>
+      <input type="search" name="pesquisa" id='textBusca'">
+      <button type="button" onclick="bttBusca()">Buscar</button> <!-- Botão via JS que busca resultados pela API--> 
+      <button type="button" onclick="bttSubmit()">Submit</button>      
+    <div>
+  
+   
   <div id="videos">
     
+
+
   </div>
 
 
