@@ -1,62 +1,20 @@
+<style>
 
-
-.table td.center{
-	text-align:center;
-	font-size:13px;}
-
-.table td.peso{
-	color:#888;
-	font-size:13px;}
-
-.table td.sua{
-	color:#444;
-	font-size:13px;}
-
-.table td.total{
-	font-weight:bold;font-size:13px;
+.pluginBAVi{
+	align-self: center;
 }
-
- a:link, a:visited{
- 	color:#222;
- 	font-size:13px;}
-
- a:hover, a:focus{
- 	color:#2170DC;
- 	font-size:13px;
- }
-
-.divPrincipal{
-	width:100%;
-	text-align:center;
-	margin:0 auto;
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 3px solid #C0C0C0;
+    margin-left: 15%;
 }
-
-.divCursos{
-	width:100%;
-	text-align:left;
-	margin:0 auto;
-	border-bottom:1px solid black;
+input[type=checkbox] {
+  transform: scale(2.0);;
+  border-bottom: 2px;
 }
+.checkbox-info{
 
-.divCursos h4{
-	text-align:center;
 }
-.divCursos a{
-	font-weight:bold;
-}
-
-
-.classe-exemplo{
-    font-size: 24px;
-    background: #00acdf;
-    color: #108;
-    border: solid 1px blue;
-    box-shadow: 4px 3px 9px rgba(0,0,0,0.5);
-}
-
-
-.pesq{
-    align-content: : center;
-    color: #777;
-}
-
+</style>
