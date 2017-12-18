@@ -126,64 +126,67 @@ echo $OUTPUT->heading('Vídeo Aulas');
 </video> --> 
 
 
-
-  <!--script para a funcionalidade do botao de busca -->
-  <script type="text/javascript">
-    
-      function bttBusca(){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              var json = JSON.parse(this.responseText);
-              var aux =""
-              // Criação de um lupe para cada comandod e busca
-              for(var i=0;i <json.length; ++i){
-                 aux = aux+
-                "<input class='box' type='checkbox' name='your-group' id='combo"+i+"'/>"+
-                "<video class='center' width='50%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video> <br> <br>";
-              }
-              document.getElementById('videos').innerHTML = aux;
-           }
-        };
-        //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
-        xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
-        xhttp.send();
-      }
-
-    function bttSubmit(){
-      var videos = new Array();
-      for (var i =0; ;++i){
-        var box = document.getElementById('combo'+i);
-        if (box != null){
-          if (box.checked ){
-            videos.push(document.getElementById('comboVideo'+i));
+<!--script para a funcionalidade do botao de busca -->
+<script type="text/javascript">
+  function bttBusca(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var json = JSON.parse(this.responseText);
+          var aux =""
+          // Criação de um lupe para cada comandod e busca
+          for(var i=0;i <json.length; ++i){
+             aux = aux+
+            "<br><input type='checkbox' name='your-group' id='combo"+i+"' />"+
+            "<video width='400' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video>";
           }
-        }else{
-          break;
+          document.getElementById('videos').innerHTML = aux;
+       }
+    };
+    //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
+    xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
+    xhttp.send();
+  }
+
+  function bttSubmit(){
+    var videos = new Array();
+    for (var i =0; ;++i){
+      var box = document.getElementById('combo'+i);
+      if (box != null){
+        if (box.checked ){
+          videos.push(document.getElementById('comboVideo'+i));
         }
-      }
-      for( var i = 0; i<videos.length; ++i){
-        alert (videos[i].src);
+      }else{
+        break;
       }
     }
-  </script>
-
+    for( var i = 0; i<videos.length; ++i){
+      alert (videos[i].src);
+    }
+  }
+</script>
 
   <!-- area de recebimento dados usuario --> 
-    <div class="pluginBAVi" align="center">
+    <div class="plugin" align="center">
       <br> <br>
       <h2><b><font color="##1E90FF"> Pesquisa: </b></h2><br> </font> 
-      <input class="form-control" type="search" name="pesquisa" id='textBusca'">
+      <input class="pesquisas" id="textBusca" maxlength="2048" name="pesquisa" title="Pesquisar" type="search">
       <br> <br> 
-      <button class="btn btn-primary"  type="button" onclick="bttBusca()"> Buscar</button> <!-- Botão via JS que busca resultados pela API--> 
-      <button class="btn btn-primary" type="submit" onclick="bttSubmit()">Submit</button>   
-      <br> <br> <br>   
+      <button class="btn btn-primary"  type="button" onclick="bttBusca()"> Buscar</button> 
+      <!-- Botão via JS que busca resultados pela API--> 
+      <button class="btn btn-primary" type="submit" onclick="bttSubmit()">Submit</button> 
+      <br> <br> <br>
     </div>
   
    
-  <div id="videos" class=".col-md-12">
+  <div id="videos">
+    
+
+
   </div>
 
 
 
 <?= $OUTPUT->footer(); ?>
+
+
