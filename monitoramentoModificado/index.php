@@ -89,21 +89,21 @@ foreach ($arrResult as $result) {
     $notAccessUser[] = $result['userid'];
 }
 
-// USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão APROVADOS
-$arrResult = $fnc->selectApprovedUser($courseId, $accessUser);
+// // USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão APROVADOS
+// $arrResult = $fnc->selectApprovedUser($courseId, $accessUser);
 
-foreach ($arrResult as $result) {
-    $approvedBF[$result['department']][] = $result['userid'];
-    $approved[] = $result['userid'];
-}
+// foreach ($arrResult as $result) {
+//     $approvedBF[$result['department']][] = $result['userid'];
+//     $approved[] = $result['userid'];
+// }
 
-// USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão REPROVADOS
-$arrResult = $fnc->selectRepprovedUser($courseId, $accessUser);
+// // USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão REPROVADOS
+// $arrResult = $fnc->selectRepprovedUser($courseId, $accessUser);
 
-foreach ($arrResult as $result) {
-    $repprovedBF[$result['department']][] = $result['userid'];
-    $repproved[] = $result['userid'];
-}
+// foreach ($arrResult as $result) {
+//     $repprovedBF[$result['department']][] = $result['userid'];
+//     $repproved[] = $result['userid'];
+// }
 
 ?>
 
@@ -126,46 +126,94 @@ echo $OUTPUT->heading('Vídeo Aulas');
 </video> --> 
 
 
-<!--script para a funcionalidade do botao de busca -->
-<script type="text/javascript">
-  function bttBusca(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var json = JSON.parse(this.responseText);
-          var aux =""
-          // Criação de um lupe para cada comandod e busca
-          for(var i=0;i <json.length; ++i){
-             aux = aux+
-            "<br><input type='checkbox' name='your-group' id='combo"+i+"' />"+
-            "<video width='400' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video>";
-          }
-          document.getElementById('videos').innerHTML = aux;
-       }
-    };
-    //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
-    xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
-    xhttp.send();
-  }
 
-  function bttSubmit(){
-    var videos = new Array();
-    for (var i =0; ;++i){
-      var box = document.getElementById('combo'+i);
-      if (box != null){
-        if (box.checked ){
-          videos.push(document.getElementById('comboVideo'+i));
-        }
-      }else{
-        break;
+  <!--script para a funcionalidade do botao de busca -->
+  <script type="text/javascript">
+    
+      function bttBusca(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var json = JSON.parse(this.responseText);
+              var aux =""
+              // Criação de um lupe para cada comandod e busca
+              for(var i=0;i <json.length; ++i){
+                 aux = aux+
+                "<input class='box' type='checkbox' name='your-group' id='combo"+i+"'/>"+
+                "<video class='center' width='50%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video> <br> <br>";
+              }
+              document.getElementById('videos').innerHTML = aux;
+           }
+        };
+        //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
+        xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
+        xhttp.send();
       }
-    }
-    for( var i = 0; i<videos.length; ++i){
-      alert (videos[i].src);
-    }
-  }
-</script>
 
+    function bttSubmit(){
+      var videos = {};
+      var totVideos =0;
+      for (var i =0; ;++i){//Getting the videos url
+        var box = document.getElementById('combo'+i);
+        if (box != null){
+          if (box.checked ){
+            videos[totVideos]=(document.getElementById('comboVideo'+i).src);
+            ++totVideos;
+          }
+        }else{
+          break;
+        }
+      }
+      var videosJson = JSON.stringify(videos);
+      var xhttp = new XMLHttpRequest();//sending AJAX request with the urls for database insertion
+      xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+/*            if(this.responseText == 'true'){
+              alert("URLs criadas com sucesso "+this.responseText);
+            }else{
+              alert("Erro ao criar 1 ou mais URLs");
+            }*/
+            alert(this.responseText);
+         }
+      };
+      //Parametros para o POST
+      var getParams = getGETParams();
+        //nomes
+      var names = {};
+      for(var i=0;i<totVideos;++i){
+        names[i]=(videos[i]).substring(
+          (videos[i]).lastIndexOf('/')+1,
+          (videos[i].length-4));
+      }
+      var namesJson = JSON.stringify(names);
+
+      //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
+      xhttp.open("POST","ajaxsubmit.php", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send("cid="+getParams.id+"&urls="+videosJson+"&names="+namesJson+"&section="+getParams.section);
+    }
+
+    //Particiona os valores passados por GET em um array
+    function getGETParams(){
+      var vals = window.location.search.substr(1);
+      if(vals == null || vals == ""){
+        return {};
+      }else
+        return getToArray(vals);
+    }
+
+    function getToArray(vals){
+      var params = {};
+      var nval = vals.split("&");
+      for ( var i = 0; i < nval.length; ++i) {
+        var tempVals = nval[i].split("=");
+        params[tempVals[0]] = tempVals[1];
+      }
+      return params;
+    }
+  </script>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
   <!-- area de recebimento dados usuario --> 
     <div class="plugin" align="center">
       <br> <br>
@@ -180,13 +228,8 @@ echo $OUTPUT->heading('Vídeo Aulas');
   
    
   <div id="videos">
-    
-
-
   </div>
 
 
 
 <?= $OUTPUT->footer(); ?>
-
-
