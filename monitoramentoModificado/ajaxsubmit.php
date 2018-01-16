@@ -2,7 +2,7 @@
    //$_POST['cid']."\n".$_POST['urls']."\n".$_POST['names'];
 	$dbType = 'mysql';
 	$dbHost = 'localhost';
-	$dbName = 'moodlebavi';
+	$dbName = 'moodle2018';
 	$dbUser = 'root';
 	$dbPass = 'root';
 	$dbPort = '3306';
@@ -14,7 +14,95 @@
     	exit(0);
 	}
 	$urls = json_decode($_POST['urls'],true);//Urls de cada video
-	$names = json_decode($_POST['names'],true);//Urls de cada video
+	$names = json_decode($_POST['names'],true);
+	//Urls de cada video
+	/*######################################################dicionando Rótulo######################################################*/
+    	//Query 8 -> mdl_url
+		//-- module fixo em 20(tipo url no moodle)
+		//-- section = sessão atual da atividade
+		//-- instance = id da url adicionada na tabela mdl_url
+		$sql = "INSERT INTO mdl_label (course,name,intro,introformat,timemodified) VALUES (".$_POST['cid'].",\"".$_POST['rotName']."\",'<p>'\"".$_POST['rotName']."\"'</p>',1,unix_timestamp(now()))";
+
+		$id_mdl_label=-1;
+		if ($conn->query($sql) === TRUE) {
+    		$id_mdl_label = $conn->insert_id;
+    	}else{
+    		echo "(8)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(8);
+    	}
+
+		//Query 9 -> mdl_course_modules
+		//-- module fixo em 12(tipo label no moodle)
+		//-- section = sessão atual da atividade
+		//-- instance = id da url adicionada na tabela mdl_url
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",12,".$id_mdl_label.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$id_mdl_course_modules=-1;
+		if ($conn->query($sql) === TRUE) {
+    		$id_mdl_course_modules = $conn->insert_id;
+    	}else{
+    		echo "(9)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(9);
+    	}
+
+		//Query 10 -> mdl_course_sections
+		//-- id = section usada no insert anterior
+		//-- sequence = valor atual da sequencia, concatenado de ",XZ", onde XZ é o id do campo adicionado no mdl_course_modules
+		$sqlaux = "SELECT sequence FROM mdl_course_sections WHERE section=".$_POST['section']." AND course=".$_POST['cid'];
+		$sequence='';
+		$queryResult = $conn->query($sqlaux);
+		if ($queryResult->num_rows >0) {
+			$row = $queryResult->fetch_assoc();
+    		$sequence = $row['sequence'];
+    	}else{
+    		echo "(10)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(10);
+    	}
+
+		$sql = "UPDATE mdl_course_sections set sequence = \"".$sequence.",".$id_mdl_course_modules."\" where section = ".$_POST['section']." AND course=".$_POST['cid'];
+		if ($conn->query($sql) === TRUE) {
+    		
+    	}else{
+    		echo "(11)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(11);
+    	}
+
+		//Query 12 -> mdl_course_sections
+		//-- instanceid = id do mdl_course_modules
+		//-- contextlelve = 70 (nivel de qualquer modulo)
+		//-- path = 1<sistema>/3<categoria do curso>/21<constante para todos os modulos; descobrir por que>/id dessa entrada
+		$sqlaux = "SELECT path FROM mdl_context WHERE contextlevel = 50 and path like '/1/3/%'";
+		$queryResult = $conn->query($sqlaux);
+		$path = "/1";
+		if ($queryResult->num_rows >0) {
+			$row = $queryResult->fetch_assoc();
+    		$path = $row['path'];
+    	}else{
+    		echo "(12)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(12);
+    	}
+    	$sqlaux = "SELECT id FROM mdl_context ORDER BY id DESC LIMIT 1";
+		$queryResult = $conn->query($sqlaux);
+		$lastID=-1;
+		if ($queryResult->num_rows >0) {
+			$row = $queryResult->fetch_assoc();
+    		$lastID = $row['id'];
+    	}else{
+    		echo "(13)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(13);
+    	}
+			//atualizar path com resultado de sqlaux concatenado com o id do anteriorS
+		$sql = "INSERT INTO mdl_context (contextlevel,instanceid,path,depth)VALUES (70,".$id_mdl_course_modules.",\"".$path."/".($lastID+1)."\",".(substr_count($path,"/")+1).")";
+		$thisContextID=-1;
+		if ($conn->query($sql) === TRUE) {
+    		$thisContextID = $conn->insert_id;
+    		if($thisContextID != $lastID+1){
+    			$sqlaux = "UPDATE mdl_context set path = ".$path."/".($thisContextID)." WHERE id=".$thisContextID;
+    		}
+    	}else{
+    		echo "(14)Erro ao criar Rótulo:\n".$conn->error;
+    		exit(14);
+    	}
+	/*######################################################dicionando URLS######################################################*/
 	for($i=0;$i<count($urls);++$i){		
 		//Query 1 -> mdl_url
 		//-- module fixo em 20(tipo url no moodle)
@@ -33,7 +121,7 @@
 		//-- module fixo em 20(tipo url no moodle)
 		//-- section = sessão atual da atividade
 		//-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (2,20,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",20,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
 		$id_mdl_course_modules=-1;
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_course_modules = $conn->insert_id;
@@ -45,7 +133,7 @@
 		//Query 3 -> mdl_course_sections
 		//-- id = section usada no insert anterior
 		//-- sequence = valor atual da sequencia, concatenado de ",XZ", onde XZ é o id do campo adicionado no mdl_course_modules
-		$sqlaux = "SELECT sequence FROM mdl_course_sections WHERE id=".$_POST['section'];
+		$sqlaux = "SELECT sequence FROM mdl_course_sections WHERE section=".$_POST['section']." AND course=".$_POST['cid'];
 		$sequence='32,33,34,35,36,37,38,39';
 		$queryResult = $conn->query($sqlaux);
 		if ($queryResult->num_rows >0) {
@@ -56,7 +144,7 @@
     		exit(3);
     	}
 
-		$sql = "UPDATE mdl_course_sections set sequence = \"".$sequence.",".$id_mdl_course_modules."\" where id = ".$_POST['section'];
+		$sql = "UPDATE mdl_course_sections set sequence = \"".$sequence.",".$id_mdl_course_modules."\" where section = ".$_POST['section']." AND course=".$_POST['cid'];
 		if ($conn->query($sql) === TRUE) {
     		
     	}else{
@@ -100,6 +188,7 @@
     		echo "(7)Erro ao atualizar a base de dados:\n".$conn->error;
     		exit(7);
     	}
+
 	}
 
 	//echo $_POST['cid']."\n".$_POST['urls']."\n".$_POST['names'];

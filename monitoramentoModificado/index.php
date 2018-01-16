@@ -186,11 +186,12 @@ echo $OUTPUT->heading('Vídeo Aulas');
           (videos[i].length-4));
       }
       var namesJson = JSON.stringify(names);
+      var rotName = document.getElementById('textBusca').value;
 
       //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
       xhttp.open("POST","ajaxsubmit.php", true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhttp.send("cid="+getParams.id+"&urls="+videosJson+"&names="+namesJson+"&section="+getParams.section);
+      xhttp.send("cid="+getParams.id+"&urls="+videosJson+"&names="+namesJson+"&section="+getParams.section+"&rotName="+rotName);
     }
 
     //Particiona os valores passados por GET em um array
