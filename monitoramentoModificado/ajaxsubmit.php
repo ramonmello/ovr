@@ -7,6 +7,7 @@
 	$dbPass = 'root';
 	$dbPort = '3306';
 	$dbChar = 'UTF8';
+	$moodleData_Path = "/var/www/moodledata/cache";
 
 	$conn = $mysqli = new mysqli($dbHost, $dbUser, $dbPass, $dbName,$dbPort);
 	if ($mysqli->connect_errno) {
@@ -16,7 +17,7 @@
 	$urls = json_decode($_POST['urls'],true);//Urls de cada video
 	$names = json_decode($_POST['names'],true);
 	//Urls de cada video
-	/*######################################################dicionando Rótulo######################################################*/
+/*######################################################dicionando Rótulo######################################################*/
     	//Query 8 -> mdl_url
 		//-- module fixo em 20(tipo url no moodle)
 		//-- section = sessão atual da atividade
@@ -27,7 +28,7 @@
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_label = $conn->insert_id;
     	}else{
-    		echo "(8)Erro ao criar Rótulo:\n".$conn->error;
+    		echo $_POST['id']."\n".$sql."\n(8)Erro ao criar Rótulo:\n".$conn->error;
     		exit(8);
     	}
 
@@ -102,7 +103,7 @@
     		echo "(14)Erro ao criar Rótulo:\n".$conn->error;
     		exit(14);
     	}
-	/*######################################################dicionando URLS######################################################*/
+/*######################################################dicionando URLS######################################################*/
 	for($i=0;$i<count($urls);++$i){		
 		//Query 1 -> mdl_url
 		//-- module fixo em 20(tipo url no moodle)
@@ -190,8 +191,32 @@
     	}
 
 	}
-
-	//echo $_POST['cid']."\n".$_POST['urls']."\n".$_POST['names'];
 	$conn->close();
+/*#######################################################Limpando a Cache#######################################################*/
+	//Deletando Cache da página (O próprio moodle faria esta ação se utilizássemos a API de eventos, mas como sempre, ninguém consegue entender a API, então fazemos manualmente)
+	$cacheDirPath = $moodleData_Path.
+				"/cachestore_file/default_application/core_coursemodinfo";//Diretorio onde os arquivos de cache de exibição estão
+	$cacheDir = opendir($cacheDirPath);
+	//O primeiro digito do nome das pastas é o id do curso das mesmas, o segundo digito, separado por '-' pode variar de instalação a instalação, então primeiro procuramos por uma pasta que comece com o id do curso que estamos modifican
+	$readyToDelete = false;
+	while($ourCourseDir = readdir($cacheDir)){
+		if(is_dir($cacheDirPath."/".$ourCourseDir)){
+			if(preg_match("/^".$_POST['cid']."-/",$ourCourseDir)){//Diretorio do nosso curso encontrado
+				$readyToDelete = true;
+				$cacheDirPath = $cacheDirPath."/".$ourCourseDir;
+				break;
+			}
+		}
+	}
+	closedir($cacheDir);
+	$cacheDir = opendir($cacheDirPath);
+	if($readyToDelete){
+		while($file = readdir($cacheDir)) {
+			if ($file != "." && $file != "..") {
+				unlink($cacheDirPath."/".$file);
+			}
+		}
+	}
+	closedir($cacheDir);
 	echo "sucesso";
 ?>
