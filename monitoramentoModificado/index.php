@@ -1,8 +1,10 @@
 <?php
-/**
-* RELATÓRIO DE MONITORAMENTO SAEB 2017
-* Página Principal
-* Última atualização: 26/10/2017
+/*
+  Website de busca para o serviço BAVi.
+  Código baseado na página inicial de 'RELATÓRIO DE MONITORAMENTO SAEB 2017', atualização '26/10/2017'
+  @author Miguel Alvim
+  @version ALPHA
+  @date 19/08/2018
 */
 
 //require $_SERVER['DOCUMENT_ROOT'] . '/config.php';
@@ -120,14 +122,7 @@ echo $OUTPUT->heading('Vídeo Aulas');
 
 
 ?>
-<!-- <video width="400" controls>
-  <source src="http://138.121.71.4/material_1/aula001_testeapi.mp4" type="video/mp4">
-  Your browser does not support HTML5 video.
-</video> --> 
-
-
-
-  <!--script para a funcionalidade do botao de busca -->
+  <!--script para a funcionalidade do botao de busca e submit-->
   <script type="text/javascript">
     
       function bttBusca(){
@@ -174,6 +169,16 @@ echo $OUTPUT->heading('Vídeo Aulas');
               alert("Erro ao criar 1 ou mais URLs");
             }*/
             alert(this.responseText);
+            //Obtendo a URL do curso a partir da url atual; mais seguro do que utilizar window.location.referrer, já que evita o problema de acessar a pagina via link (se não usarmos um link a partir de outra página, referrer não funciona)
+              //usando Regex
+              var expression = /^.*\/(?=mod)/;
+              var currentURL = (window.location.href); 
+              var courseURL = expression.exec(currentURL); 
+              if(courseURL){
+                var getParams = getGETParams();
+                courseURL = courseURL+"course/view.php?id="+getParams.id;
+                window.location.replace(courseURL);
+              }
          }
       };
       //Parametros para o POST
