@@ -9,6 +9,10 @@
 	$dbChar = 'UTF8';
 	$moodleData_Path = "/var/www/moodledata/cache";
 
+	if(!isset($_POST["cid"]) || !isset($_POST["rotName"]) || !isset($_POST["section"]) || !isset($_POST["names"]) || !isset($_POST["urls"])){
+		echo "(-1)Um ou mais valores não foram corretamente passados (via POST)"
+    	exit(-1);
+	}
 	$conn = $mysqli = new mysqli($dbHost, $dbUser, $dbPass, $dbName,$dbPort);
 	if ($mysqli->connect_errno) {
    		echo "Erro ao atualizar a base de dados: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
