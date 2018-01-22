@@ -1,7 +1,7 @@
 <?php   
 /*
 	Script de criação das URLs e Labels dos vídeos obtidos pela busca no servidor BAVi.
-	@author Miguel Alvim
+	@author Miguel Alvim, Marluce Ap. Vitor
 	@version ALPHA
 	@date 19/08/2018
 */
