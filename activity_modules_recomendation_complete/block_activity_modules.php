@@ -101,6 +101,7 @@ $this->content->items[] = '<b>Recomendar Vídeo-aulas</b>';
 
 $combox = '<form action="" method="post">';
 $combox.= '<label for="section">Qual semana deseja inserir a recomendação?</label><select id = "t" onchange="location = this.value;"> ';
+ $combox.='  <option value="" >--Selecione--</option>';
 for($i =0; $i <sizeof($listcourse); $i++){
   $combox.='  <option value="'.$CFG->wwwroot.'/blocks/activity_modules/index.php?id='.$course->id.'&section='.$i.'" >'.$i.'</option>';
 
