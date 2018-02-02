@@ -10,6 +10,9 @@
     border: 3px solid #BEBEBE;
     border-radius: 10px;
 }
+.box{
+  margin-left: 23%;
+}
 
 .input[type=checkbox] {
   transform: scale(2.0);;

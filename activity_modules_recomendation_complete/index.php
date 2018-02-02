@@ -217,14 +217,26 @@ echo $OUTPUT->heading('Vídeo Aulas');
       }
       return params;
     }
+
+    function enter(evento){ 
+           tecla = evento.keyCode;
+           if(tecla == 0)
+           {
+                   tecla = evento.charCode;
+           }
+           if(tecla == 13)
+           {
+            bttBusca();
+           }
+    }
   </script>
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="-1">
   <!-- area de recebimento dados usuario --> 
     <div class="plugin" align="center">
-      <br> <br>
+            <br> <br>
       <h2><b><font color="##1E90FF"> Pesquisa: </b></h2><br> </font> 
-      <input class="pesquisas" id="textBusca" maxlength="2048" name="pesquisa" title="Pesquisar" type="search">
+      <input class="ls-field-sm" id="textBusca" size="80" name="pesquisa" title="Pesquisar" type="search" onkeypress="enter(event);" >
       <br> <br> 
       <button class="btn btn-primary"  type="button" onclick="bttBusca()"> Buscar</button> 
       <!-- Botão via JS que busca resultados pela API--> 
