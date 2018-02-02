@@ -14,7 +14,7 @@
 	$dbPass = 'root';
 	$dbPort = '3306';
 	$dbChar = 'UTF8';
-	$moodleData_Path = "/var/www/moodlebavidata/cache";
+	$moodleData_Path = "/var/www/moodledata/cache";
 
 //Validando valores passados via POST; Todos precissão ser válidos para que a inserção funcione
 /*
