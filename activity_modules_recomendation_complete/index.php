@@ -134,11 +134,11 @@ echo $OUTPUT->heading('Vídeo Aulas');
               // Criação de um lupe para cada comandod e busca
               for(var i=0;i <json.length; ++i){
                  aux = aux+
-                "<input class='box' type='checkbox' name='your-group' id='combo"+i+"'/>"+
-                "<video class='center' width='50%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video> <br> <br>";
+                "<div class='col-md-4'><input class='box' type='checkbox' name='your-group' id='combo"+i+"'/>"+
+                "<video class='center' width='50%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video> <br></div>";
               }
-              document.getElementById('videos').innerHTML = aux;
-           }
+              document.getElementById('videos').innerHTML = aux+"<div class='col-md-12'><button class='btn1 btn-primary' type='submit' onclick='bttSubmit()'>Enviar</button></div> ";
+           } 
         };
         //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
         xhttp.open("GET", "ajaxreceiver.php?keyword="+document.getElementById('textBusca').value, true);
@@ -232,6 +232,7 @@ echo $OUTPUT->heading('Vídeo Aulas');
   </script>
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="-1">
+
   <!-- area de recebimento dados usuario --> 
     <div class="plugin" align="center">
             <br> <br>
@@ -239,9 +240,7 @@ echo $OUTPUT->heading('Vídeo Aulas');
       <input class="ls-field-sm" id="textBusca" size="80" name="pesquisa" title="Pesquisar" type="search" onkeypress="enter(event);" >
       <br> <br> 
       <button class="btn btn-primary"  type="button" onclick="bttBusca()"> Buscar</button> 
-      <!-- Botão via JS que busca resultados pela API--> 
-      <button class="btn btn-primary" type="submit" onclick="bttSubmit()">Submit</button> 
-      <br> <br> <br>
+      <br> <br>
     </div>
   
    
@@ -251,3 +250,4 @@ echo $OUTPUT->heading('Vídeo Aulas');
 
 
 <?= $OUTPUT->footer(); ?>
+
