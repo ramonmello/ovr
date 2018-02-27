@@ -118,7 +118,7 @@ $PAGE->set_title('Monitoramento');
 $PAGE->set_heading($courseData->fullname);
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading('Vídeo Aulas');
+echo $OUTPUT->heading('videoaulas');
 
 
 ?>
