@@ -1,0 +1,35 @@
+
+<style>
+.plugin{
+  align-self: center;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 3px solid #BEBEBE;
+    border-radius: 10px;
+}
+.box{
+  margin-left: 23%;
+}
+
+.input[type=checkbox] {
+  transform: scale(2.0);;
+  border-bottom: 3px;
+}
+.pesquisas{
+  width: 50%;  
+  z-index: 6; 
+  left: 0px; 
+  outline: none;
+    font: 16px arial,sans-serif;
+    align-content: center;
+}
+
+.btn1{
+  float: right;
+}
+
+</style>
+
