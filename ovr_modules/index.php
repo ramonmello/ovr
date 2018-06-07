@@ -134,7 +134,7 @@ echo $OUTPUT->heading('videoaulas');
               // Criação de um lupe para cada comandod e busca
               for(var i=0;i <json.length; ++i){
                 aux = aux+
-                "<div class='col-md-4'><div class='col-md-4'><input class='box' type='checkbox' name='your-group' id='combo"+i+"'/>"+
+                "<div class='col-md-4'><div class='col-md-4'><input class='col-md-4' type='checkbox' name='your-group' id='combo"+i+"'/>"+
                 "<br></div><video class='center' width='85%' height='25%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video></br></br></div>";
               }
               document.getElementById('videos').innerHTML = aux+"<div class='col-md-12'><button class='btn1 btn-primary' type='submit' onclick='bttSubmit()'>Enviar</button></div> ";
