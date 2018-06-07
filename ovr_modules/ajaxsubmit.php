@@ -64,7 +64,7 @@
 //-- module fixo em 12(tipo label no moodle)
 //-- section = sessão atual da atividade
 //-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",12,".$id_mdl_label.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",12,".$id_mdl_label.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,0,0,1,NULL,0,0,0,NULL,0)";
 		$id_mdl_course_modules=-1;
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_course_modules = $conn->insert_id;
@@ -154,7 +154,7 @@
 //-- module fixo em 20(tipo url no moodle)
 //-- section = sessão atual da atividade
 //-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",20,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",20,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,0,0,1,NULL,0,0,0,NULL,0)";
 		$id_mdl_course_modules=-1;
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_course_modules = $conn->insert_id;

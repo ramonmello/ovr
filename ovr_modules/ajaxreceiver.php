@@ -14,7 +14,8 @@
 	// Criação de um lupe para tratar os dados da consulta
 		foreach($arrayResult["results"]["bindings"] as $key => $value){
 			$recebe = $arrayResult["results"]["bindings"][$key]["link"]["value"];
-			array_push ($retorno, $recebe);
+			if(! in_array($recebe,$retorno,false))
+				array_push ($retorno, $recebe);
 	 	}
 	echo json_encode($retorno);
 ?>

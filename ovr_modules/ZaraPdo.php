@@ -123,7 +123,7 @@ class ZaraPdo
      *
      * @return array
      */
-    public function getErrors() : array
+    public function getErrors() //: array
     {
         return $this->errors;
     }
