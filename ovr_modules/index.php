@@ -131,13 +131,14 @@ echo $OUTPUT->heading('videoaulas');
             if (this.readyState == 4 && this.status == 200) {
               var json = JSON.parse(this.responseText);
               var aux =""
-              // Criação de um lupe para cada comandod e busca
-              for(var i=0;i <json.length; ++i){
+              // Criação de um lupe para cada comando de busca
+              for(var i=0;i <json.length; ++i){                
+                var title = json[i].substring(json[i].lastIndexOf('/')+1,(json[i].length-4));
                 aux = aux+
-                "<div class='col-md-4'><div class='col-md-4'><input class='col-md-4' type='checkbox' name='your-group' id='combo"+i+"'/>"+
-                "<br></div><video class='center' width='85%' height='25%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video></br></br></div>";
+                "<div class='col-md-4'><div class='col-md-4'><input type='checkbox' name='your-group' id='combo"+i+"'/>"+
+                "<br></div><video class='center' width='85%' height='25%' controls id='comboVideo"+i+"' src="+json[i]+">"+"</video><div class='col-md-4.legenda' id='legenda' align='center'><textarea class='legenda' id='editLegenda"+i+"'>"+title+"</textarea></div></br></br></div>";
               }
-              document.getElementById('videos').innerHTML = aux+"<div class='col-md-12'><button class='btn1 btn-primary' type='submit' onclick='bttSubmit()'>Enviar</button></div> ";
+              document.getElementById('videos').innerHTML = aux+"<div class='col-md-12'><button class='btn1 btn-primary' type='submit' onclick='bttSubmit()'>Enviar</button></div>";
            } 
         };
         //formade recebimento dos dados, arquivo que contem as funções, variavel que guarda os dados digitados pelo usuario
@@ -147,12 +148,15 @@ echo $OUTPUT->heading('videoaulas');
 
     function bttSubmit(){
       var videos = {};
+      var names = {};
       var totVideos =0;
       for (var i =0; ;++i){//Getting the videos url
         var box = document.getElementById('combo'+i);
         if (box != null){
           if (box.checked ){
             videos[totVideos]=(document.getElementById('comboVideo'+i).src);
+            names[totVideos]=(document.getElementById('editLegenda'+i).value);
+            alert(names[totVideos]);
             ++totVideos;
           }
         }else{
@@ -183,13 +187,6 @@ echo $OUTPUT->heading('videoaulas');
       };
       //Parametros para o POST
       var getParams = getGETParams();
-        //nomes
-      var names = {};
-      for(var i=0;i<totVideos;++i){
-        names[i]=(videos[i]).substring(
-          (videos[i]).lastIndexOf('/')+1,
-          (videos[i].length-4));
-      }
       var namesJson = JSON.stringify(names);
       var rotName = document.getElementById('textBusca').value;
 
