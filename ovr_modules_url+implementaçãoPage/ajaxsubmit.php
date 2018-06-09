@@ -8,10 +8,10 @@
 
 //Valores de acesso ao banco e cache do moodle
 	$dbType = 'mysql';
-	$dbHost = '127.0.0.1';
+	$dbHost = 'localhost';
 	$dbName = 'moodle';
 	$dbUser = 'root';
-	$dbPass = '@12345aA';
+	$dbPass = 'root';
 	$dbPort = '3306';
 	$dbChar = 'UTF8';
 	$moodleData_Path = "/var/www/moodledata/cache";
