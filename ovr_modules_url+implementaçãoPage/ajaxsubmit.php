@@ -9,12 +9,12 @@
 //Valores de acesso ao banco e cache do moodle
 	$dbType = 'mysql';
 	$dbHost = 'localhost';
-	$dbName = 'moodle';
+	$dbName = 'moodleserver';
 	$dbUser = 'root';
 	$dbPass = 'root';
 	$dbPort = '3306';
 	$dbChar = 'UTF8';
-	$moodleData_Path = "/var/www/moodledata/cache";
+	$moodleData_Path = "/var/www/moodleserverdata/cache";
 
 //Validando valores passados via POST; Todos precissão ser válidos para que a inserção funcione
 /*
@@ -64,7 +64,7 @@
 //-- module fixo em 12(tipo label no moodle)
 //-- section = sessão atual da atividade
 //-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",12,".$id_mdl_label.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",12,".$id_mdl_label.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,0,0,1,NULL,0,0,0,NULL,0)";
 		$id_mdl_course_modules=-1;
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_course_modules = $conn->insert_id;
@@ -141,8 +141,11 @@
 //-- module fixo em 20(tipo url no moodle)
 //-- section = sessão atual da atividade
 //-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_url (course,name,intro,introformat,externalurl,display,displayoptions,parameters,timemodified)VALUES (".$_POST['cid'].",\"".$names[$i]."\",\"\",1,\"".$urls[$i]."\",0,\"a:1:{s:10:\"\"printintro\"\";i:1;}\",\"a:0:{}\",unix_timestamp(now()))";
+		////$sql = "INSERT INTO mdl_url (course,name,intro,introformat,externalurl,display,displayoptions,parameters,timemodified)VALUES (".$_POST['cid'].",\"".$names[$i]."\",\"\",1,\"".$urls[$i]."\",0,\"a:1:{s:10:\"\"printintro\"\";i:1;}\",\"a:0:{}\",unix_timestamp(now()))";
+		$flag = true;
+		$sql ="INSERT INTO mdl_page (course,name,intro,introformat,content,contentformat,legacyfiles, legacyfileslast,display,displayoptions,revision,timemodified) VALUES(".$_POST['cid'].",\"".$names[$i]."\",\"\", 1,\"<p>&nbsp;&nbsp;<video controls=\"\"true\"\"><source src=\"\"".$urls[$i]."\"\">".$urls[$i]."</video>&nbsp;&nbsp;<br></p>\", 1, 0, NULL, 5, \"a:2:{s:12:\"\"printheading\"\";s:1:\"\"1\"\";s:10:\"\"printintro\"\";s:1:\"\"0\"\";}\", 1,unix_timestamp(now()))";
 		$id_mdl_url=-1;
+
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_url = $conn->insert_id;
     	}else{
@@ -154,7 +157,7 @@
 //-- module fixo em 20(tipo url no moodle)
 //-- section = sessão atual da atividade
 //-- instance = id da url adicionada na tabela mdl_url
-		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleoncoursepage,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",20,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,1,0,0,1,NULL,0,0,0,NULL,0)";
+		$sql = "INSERT INTO mdl_course_modules (course,module,instance,section,idnumber,added,score,indent,visible,visibleold,groupmode,groupingid,completion,completiongradeitemnumber,completionview,completionexpected,showdescription,availability,deletioninprogress) VALUES (".$_POST['cid'].",15,".$id_mdl_url.",".$_POST['section'].",\"\",unix_timestamp(now()),0,0,1,1,0,0,1,NULL,0,0,0,NULL,0)";
 		$id_mdl_course_modules=-1;
 		if ($conn->query($sql) === TRUE) {
     		$id_mdl_course_modules = $conn->insert_id;
@@ -191,7 +194,7 @@
 
 //Query 5 -> mdl_context
 //Obtemos o caminho atual para atividades do contexto atual(50, valor padrão)
-		$sqlaux = "SELECT path FROM mdl_context WHERE contextlevel = 50 and path like '/1/3/%'";
+		$sqlaux = "SELECT path FROM mdl_context WHERE contextlevel = 70 and path like '/1/3/%'";
 		$queryResult = $conn->query($sqlaux);
 		$path = "/1";
 		if ($queryResult->num_rows >0) {
@@ -219,48 +222,18 @@
 //Atualizando path com resultado de sqlaux concatenado com o id do anterior
 //Se após a inserção for detectada uma concorrencia no acesso a tabela (alguem acessou ela no mesmo tempo que nós), verificamos se o ID que usamos foi o correto, se não, atualizamos a entrada feita com o correto
 		$sql = "INSERT INTO mdl_context (contextlevel,instanceid,path,depth)VALUES (70,".$id_mdl_course_modules.",\"".$path."/".($lastID+1)."\",".(substr_count($path,"/")+1).")";
-			$thisContextID=-1;
-			if ($conn->query($sql) === TRUE) {
-	    		$thisContextID = $conn->insert_id;
-	    		if($thisContextID != $lastID+1){
-	    			$sqlaux = "UPDATE mdl_context set path = ".$path."/".($thisContextID)." WHERE id=".$thisContextID;
-	    		}
-	    	}else{
-	    		echo "(7)Erro ao atualizar a base de dados:\n".$conn->error;
-	    		exit(7);
-	    	}
+		$thisContextID=-1;
+		if ($conn->query($sql) === TRUE) {
+    		$thisContextID = $conn->insert_id;
+    		if($thisContextID != $lastID+1){
+    			$sqlaux = "UPDATE mdl_context set path = ".$path."/".($thisContextID)." WHERE id=".$thisContextID;
+    		}
+    	}else{
+    		echo "(7)Erro ao atualizar a base de dados:\n".$conn->error;
+    		exit(7);
+    	}
 
-		}
-
-/*###########################################*/
-$sql = "INSERT INTO mdl_page(course, name, intro, introformat, content, contentformat, legacyfiles, legacyfileslast, display, displayoptions, revision, timemodified) VALUES ( ".$_POST['cid']." , 'teste url+page banco','<p>descrition</p>', 1 ,'<p> a href=\"https://www.youtube.com/watch?v=bTuvvgY_npY\">https://www.youtube.com/watch?v=bTuvvgY_npY</a><br> </p>', 1, 0,NULL, 5, 'a:2:{s:12:\"printheading\";s:1:\"1\";s:10:\"printintro\";s:1:\"0\";}',1,unix_timestamp(now()))";
-$id_mdl_page =-1;
-	if ($conn->query($sql) === TRUE) {
-		$id_mdl_page = $conn->insert_id;
-	}else{
-		echo "(1)Erro ao atualizar a base de dados:\n".$conn->error;
-		exit(1);
 	}
-
-$sql = "INSERT INTO mdl_course_modules (course, module, instance ,section, added, score, indent, visible, visibleoncoursepage, visibleold, groupmode, groupingid, completion, completiongradeitemnumber, completionview, completionexpected, showdescription, availability, deletioninprogress) VALUES (".$_POST['cid'].", 15, 32 , ".$_POST['section'].", unix_timestamp(now()), 0 , 0 , 1 , 1 , 1 , 0 , 0 , 1 , NULL , 0 ,  0 ,  0 , NULL , 0 )";
-$id_course_modules =-1;
-	if ($conn->query($sql) === TRUE) {
-		$id_course_modules = $conn->insert_id;
-	}else{
-		echo "(1)Erro ao atualizar a base de dados:\n".$conn->error;
-		exit(1);
-	}
-
-$sql = "INSERT INTO mdl_block_recent_activity (courseid, cmid , timecreated, userid, action, modname) VALUES (".$_POST['cid']." , 2 , unix_timestamp(now()) , 2, 0 , NULL)";
-$id_block_recent_activitys =-1;
-	if ($conn->query($sql) === TRUE) {
-		$id_block_recent_activity = $conn->insert_id;
-	}else{
-		echo "(1)Erro ao atualizar a base de dados:\n".$conn->error;
-		exit(1);
-	}
-/*###########################################*/
-
 	$conn->close();
 /*#######################################################Limpando a Cache#######################################################*/
 //Deletando Cache da página (O próprio moodle faria esta ação se utilizássemos a API de eventos, mas como sempre, ninguém consegue entender a API, então fazemos manualmente)
