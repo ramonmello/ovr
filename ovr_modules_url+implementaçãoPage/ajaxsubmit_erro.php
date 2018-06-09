@@ -8,13 +8,13 @@
 
 //Valores de acesso ao banco e cache do moodle
 	$dbType = 'mysql';
-	$dbHost = '127.0.0.1';
-	$dbName = 'moodle';
+	$dbHost = 'localhost';
+	$dbName = 'moodleserver';
 	$dbUser = 'root';
-	$dbPass = '@12345aA';
+	$dbPass = 'root';
 	$dbPort = '3306';
 	$dbChar = 'UTF8';
-	$moodleData_Path = "/var/www/moodledata/cache";
+	$moodleData_Path = "/var/www/moodleserverdata/cache";
 
 //Validando valores passados via POST; Todos precissão ser válidos para que a inserção funcione
 /*
@@ -194,7 +194,7 @@
 
 //Query 5 -> mdl_context
 //Obtemos o caminho atual para atividades do contexto atual(50, valor padrão)
-		$sqlaux = "SELECT path FROM mdl_context WHERE contextlevel = 50 and path like '/1/3/%'";
+		$sqlaux = "SELECT path FROM mdl_context WHERE contextlevel = 70 and path like '/1/3/%'";
 		$queryResult = $conn->query($sqlaux);
 		$path = "/1";
 		if ($queryResult->num_rows >0) {
