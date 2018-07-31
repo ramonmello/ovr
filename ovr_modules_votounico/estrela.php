@@ -5,6 +5,14 @@ Script de criação das URLs e Labels dos vídeos obtidos pela busca no servidor
 @version ALPHA
 @date 19/08/2018
 */
+
+//Valores de acesso ao banco e cache do moodle<?php   
+/*
+Script de criação das URLs e Labels dos vídeos obtidos pela busca no servidor BAVi.
+@author Miguel Alvim, Marluce Ap. Vitor
+@version ALPHA
+@date 19/08/2018
+*/
 //require $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once('../../config.php');
 //Valores de acesso ao banco e cache do moodle
@@ -70,3 +78,4 @@ else{
 }
 echo "sucesso";
 ?>
+

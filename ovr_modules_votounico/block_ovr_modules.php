@@ -96,22 +96,23 @@ class block_ovr_modules extends block_list {
 //for($i =0; $i <sizeof($listcourse); $i++){
  //}
 
- $courseContext = context_course::instance($COURSE->id);
- $context = $DB->get_record_sql("select roleid from {role_assignments} where contextid=".$courseContext->id . " AND userid=". $USER->id);
-  
-  if($context->roleid != 5){
-     $this->content->items[] = '<b>Recomendar VideoAulas</b>';
-     $combox = '<form action="" method="post">';
-     $combox.= '<label for="section">Qual semana deseja inserir a recomendação?</label><select id = "t" onchange="location = this.value;"> ';
-     $combox.='  <option value="" >--Selecione--</option>';
-     for($i =0; $i <sizeof($listcourse); $i++){
-     $combox.='  <option value="'.$CFG->wwwroot.'/blocks/ovr_modules/index.php?id='.$course->id.'&section='.$i.'" >'.$i.'</option>';
-     }
-     $combox.='</select>';
-     $combox.='</form>';
-     $this->content->items[] = $combox;
- }
+
+$courseContext = context_course::instance($COURSE->id);
+$context = $DB->get_record_sql("select roleid from {role_assignments} where contextid=".$courseContext->id . " AND userid=". $USER->id);
  
+ if($context->roleid != 5){
+    $this->content->items[] = '<b>Recomendar VideoAulas</b>';
+    $combox = '<form action="" method="post">';
+    $combox.= '<label for="section">Qual semana deseja inserir a recomendação?</label><select id = "t" onchange="location = this.value;"> ';
+    $combox.='  <option value="" >--Selecione--</option>';
+    for($i =0; $i <sizeof($listcourse); $i++){
+    $combox.='  <option value="'.$CFG->wwwroot.'/blocks/ovr_modules/index.php?id='.$course->id.'&section='.$i.'" >'.$i.'</option>';
+    }
+    $combox.='</select>';
+    $combox.='</form>';
+    $this->content->items[] = $combox;
+}
+
 
  
 //$escolha =$_POST['submit'];
