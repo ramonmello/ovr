@@ -1,11 +1,4 @@
 Colocar o arquivo estrela.php e o databaseStarRead.php na pasta do Módulo PAGE. 
 Lembre-se de configurar o servidor nos dois arquivos.
 
---------- Criar a tabela da estrela ---------------------
-
-CREATE TABLE mdl_estrela (
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-url VARCHAR(250) NOT NULL unique,
-star float(30) NOT NULL,
-votos int(50)
-)
+São criadas as tabelas mdl_estrela e mdl_estrela_registro automaticamente.
