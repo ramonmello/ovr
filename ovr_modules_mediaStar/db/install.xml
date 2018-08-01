@@ -25,7 +25,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="estrelaid" TYPE="foreign" FIELDS="estrelaid" REFTABLE="estrela" REFFIELDS="id" COMMENT="faz referencia ao id da tabela estrala"/>
+        <KEY NAME="estrelaid" TYPE="foreign" FIELDS="estrelaid" REFTABLE="estrela" REFFIELDS="id" COMMENT="faz referencia ao id da tabela estrela"/>
         <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="faz referencia ao id da tabela user"/>
       </KEYS>
     </TABLE>
