@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains the Activity modules block.
- *@autor(a) : Marluce Ap. Vitor
+ *
+ *@autor(a) : Marluce Ap. Vitor 
  * @package    block_ovr_modules
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @copyright  2018 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -61,40 +61,9 @@ class block_ovr_modules extends block_list {
 
         $archetypes = array();
 
-       /* foreach($modinfo->cms as $cm) {
-            // Exclude activities which are not visible or have no link (=label)
-            if (!$cm->uservisible or !$cm->has_view()) {
-                continue;
-            }
-            if (array_key_exists($cm->modname, $modfullnames)) {
-                continue;
-            }
-            if (!array_key_exists($cm->modname, $archetypes)) {
-                $archetypes[$cm->modname] = plugin_supports('mod', $cm->modname, FEATURE_MOD_ARCHETYPE, MOD_ARCHETYPE_OTHER);
-            }
-            if ($archetypes[$cm->modname] == MOD_ARCHETYPE_RESOURCE) {
-                if (!array_key_exists('resources', $modfullnames)) {
-                    $modfullnames['resources'] = get_string('resources');
-                }
-            } else {
-                $modfullnames[$cm->modname] = $cm->modplural;
-            }
-        }
-
-        core_collator::asort($modfullnames);*/
                
  $listcourse = array_keys($section);
    
-//print_r($listcourse);
-
-
-/*for(int i=0; i<=5;i++){$escolha =($listcourse[0]);
-};*/
-
-  
- // echo "O Valor de I = ".$i;
-//for($i =0; $i <sizeof($listcourse); $i++){
- //}
 
  $courseContext = context_course::instance($COURSE->id);
  $context = $DB->get_record_sql("select roleid from {role_assignments} where contextid=".$courseContext->id . " AND userid=". $USER->id);
@@ -114,16 +83,7 @@ class block_ovr_modules extends block_list {
  
 
  
-//$escolha =$_POST['submit'];
-//    echo '<br />The ' . $_POST['submit'].'<br />';
-                /*$this->content->items[] = '<a href="'.$CFG->wwwroot.'/blocks/ovr_modules/index.php?id='.$course->id.'&section='.$escolha.'">Recomendar VideoAulas</a>';*/
 
-
-               /* //ver como colocar para pegar a seção ??????
-                if ($ADMIN->fulltree) {
-                      $settings->add(new admin_setting_configselect('block_ovr_modules/list_course', get_string('list_course', 'block_ovr_modules'), get_string('select_course', 'block_ovr_modules'),'0',$listcourse));
-            
-        }*/
         return $this->content;
     }
 

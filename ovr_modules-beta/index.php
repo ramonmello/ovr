@@ -1,7 +1,6 @@
 <?php
 /*
   Website de busca para o serviço BAVi.
-  Código baseado na página inicial de 'RELATÓRIO DE MONITORAMENTO SAEB 2017', atualização '26/10/2017'
   @author Miguel Alvim
   @version ALPHA
   @date 19/08/2018
@@ -22,7 +21,7 @@ $arrCursos = array(
     //3 => 'Sistema de Avaliação da Educação Básica 2017 - Aplicadores'
 );
 // VARIÁVEIS LOCAIS
-$urlCourse   = '/monitoramento/index.php?id=';
+$urlCourse   = '/ovr_modules/index.php?id=';
 $courseData  = new stdClass();
 $courseId    = 2;
 $banUser     = '1, 2, 3, 4, 5, 6, 7, 930, 931';
@@ -65,25 +64,14 @@ foreach ($arrResult as $result) {
     $notAccessUserBF[$result['department']][] = $result['userid'];
     $notAccessUser[] = $result['userid'];
 }
-// // USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão APROVADOS
-// $arrResult = $fnc->selectApprovedUser($courseId, $accessUser);
-// foreach ($arrResult as $result) {
-//     $approvedBF[$result['department']][] = $result['userid'];
-//     $approved[] = $result['userid'];
-// }
-// // USUÁRIOS que acessaram o curso, realizaram todas as atividades e estão REPROVADOS
-// $arrResult = $fnc->selectRepprovedUser($courseId, $accessUser);
-// foreach ($arrResult as $result) {
-//     $repprovedBF[$result['department']][] = $result['userid'];
-//     $repproved[] = $result['userid'];
-// }
+
 ?>
 
 <!-- Configurações para exibição da página !-->
 <?php
 $courseContext = context_course::instance($courseData->id);
 $PAGE->set_url('/report/csv/old.php', array('id' => $courseData->id));
-$PAGE->set_title('Monitoramento');
+$PAGE->set_title('OVR_modules');
 $PAGE->set_heading($courseData->fullname);
 echo $OUTPUT->header();
 echo $OUTPUT->heading('videoaulas');

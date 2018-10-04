@@ -3,7 +3,7 @@
 	include_once('baviAPI_02.php');
 	$query= new BAViQuery;
 	$query->put("content", $_GET['keyword']);
-	$query->put("idservice", "VideoTeste");
+	$query->put("idservice", "TesteDev");
 	$query->put("op", "mediaresource");
 
 	$api= new BAViClient("http://138.121.71.4:8082/","ServidorRest");

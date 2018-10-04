@@ -26,7 +26,7 @@ global $DB;
 
 	$users = array_values($DB->get_records_sql($query, $params));
 
-	if ($$users=== FALSE) {
+	if ($users=== FALSE) {
 	 	echo "(1)Erro ao consultar a base de dados:\n".$DB->error;
 
 	 	exit(1);
