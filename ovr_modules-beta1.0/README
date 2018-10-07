@@ -1,0 +1,4 @@
+Colocar o arquivo estrela.php e o databaseStarRead.php na pasta do Módulo PAGE. 
+Lembre-se de configurar o servidor nos dois arquivos.
+
+São criadas as tabelas mdl_estrela e mdl_estrela_registro automaticamente.
