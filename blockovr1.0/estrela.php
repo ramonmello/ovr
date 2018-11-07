@@ -43,7 +43,7 @@ if($queryResult != NULL){
 		 * Updates the average value of the votes in the mdl_estrela table
 		 * $starAux = Updated average star rating score 
 		 */
-		$queryUpdate = "UPDATE mdl_estrela set star = ".$starAux.",votos=".($votosAux+1)." WHERE url=\"".$url."\"";
+		$queryUpdate = "UPDATE {estrela} set star = ".$starAux.",votos=".($votosAux+1)." WHERE url=\"".$url."\"";
 		if ($DB->execute($queryUpdate) === FALSE) {
 			echo "(3)Error on updating the database:\n".$conn->error;
 			exit(3);
@@ -56,7 +56,7 @@ if($queryResult != NULL){
 		 * $userid = logged user id
 		 * $stars = number of stars [0,5] that the user rated the video
 		 */
-		$sql2 = "INSERT INTO mdl_estrela_registro (estrelaid, userid, voto) VALUES (".$queryResult->id.", ".$userid.", ".$stars." )";
+		$sql2 = "INSERT INTO {estrela_registro} (estrelaid, userid, voto) VALUES (".$queryResult->id.", ".$userid.", ".$stars." )";
 		if ($DB->execute($sql2) === FALSE) {
 			echo "\n(4)Error on updating the database:\n ".$conn->error;
 			exit(4);
@@ -75,12 +75,12 @@ else{
 	 * $stars = first evaluation, created by the first user to rate the video
 	 * (1) = total of votes on the video (quite obvious value; we maintain the total of votes to be able to recalculate the score after each vote)
 	 */
-	$sql = "INSERT INTO mdl_estrela(url,star,votos) VALUES (\"".$url."\",".$stars.",".(1).")";
+	$sql = "INSERT INTO {estrela}(url,star,votos) VALUES (\"".$url."\",".$stars.",".(1).")";
 	if ($DB->execute($sql) === FALSE) {
 		echo "(5)Error on updating the database:\n".$conn->error;
 		exit(5);
 	}
-	$query= "select * from mdl_estrela where url=\"".$url."\"";
+	$query= "select * from {estrela} where url=\"".$url."\"";
 	$queryResult = $DB->get_record_sql($query, $params);
 
 	/**
@@ -90,7 +90,7 @@ else{
 	 * $userid = logged user id
 	 * $stars = rating that was given by the user
 	 */
-	$sql2 = "INSERT INTO mdl_estrela_registro (estrelaid, userid, voto) VALUES (".$queryResult->id.", ".$userid.", ".$stars." )";
+	$sql2 = "INSERT INTO {estrela_registro} (estrelaid, userid, voto) VALUES (".$queryResult->id.", ".$userid.", ".$stars." )";
 	if ($DB->execute($sql2) === FALSE) {
 		echo "\n(6)Error on updating the database:\n ".$conn->error;
 		exit(6);

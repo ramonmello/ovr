@@ -167,7 +167,7 @@ if ($id_mdl_course_modules === -1) {
 
 //Query 3 -> mdl_course_sections
 $sequence='32,33,34,35,36,37,38,39';
-$queryResult = $DB->get_record_sql('SELECT sequence FROM mdl_course_sections WHERE section = ? and course =  ?', array($_POST['section'], $_POST['cid']));
+$queryResult = $DB->get_record_sql('SELECT sequence FROM {course_sections} WHERE section = ? and course =  ?', array($_POST['section'], $_POST['cid']));
 if ($queryResult != NULL) {
 	$sequence = $queryResult->sequence;
 }else{
@@ -175,7 +175,7 @@ if ($queryResult != NULL) {
 	exit(3);
 }
 //Query 4 -> mdl_course_sections
-$sql = "UPDATE mdl_course_sections set sequence = \"".$sequence.",".$id_mdl_course_modules."\" where section = ".$_POST['section']." AND course=".$_POST['cid'];
+$sql = "UPDATE {course_sections} set sequence = \"".$sequence.",".$id_mdl_course_modules."\" where section = ".$_POST['section']." AND course=".$_POST['cid'];
 if ($DB->execute($sql) === TRUE) {
 	
 }else{
@@ -183,7 +183,7 @@ if ($DB->execute($sql) === TRUE) {
 	exit(4);
 }
 //Query 5 -> mdl_context
-$queryResult = $DB->get_record_sql('SELECT path FROM mdl_context WHERE contextlevel = ? and path like ?', array('50', '/1/3/%'));
+$queryResult = $DB->get_record_sql('SELECT path FROM {context} WHERE contextlevel = ? and path like ?', array('50', '/1/3/%'));
 $path = "/1";
 if ($queryResult != NULL) {
 	$path = $queryResult->path;
@@ -192,7 +192,7 @@ if ($queryResult != NULL) {
 	exit(5);
 }
 //Query 6 -> mdl_context
-$queryResult = $DB->get_record_sql('SELECT id FROM mdl_context ORDER BY id DESC LIMIT 1', NULL);
+$queryResult = $DB->get_record_sql('SELECT id FROM {context} ORDER BY id DESC LIMIT 1', NULL);
 $lastID=-1;
 if ($queryResult != NULL) {
 	 echo JSON_encode($queryResult);
@@ -211,7 +211,7 @@ $record3->depth = (substr_count($path,"/")+1);
 $thisContextID =-1;
 $thisContextID = $DB->insert_record('context', $record3, true);
 if($thisContextID != $lastID+1){
-	$sqlaux = "UPDATE mdl_context set path = ".$path."/".($thisContextID)." WHERE id=".$thisContextID;
+	$sqlaux = "UPDATE {context} set path = ".$path."/".($thisContextID)." WHERE id=".$thisContextID;
 }
 if($thisContextID ===-1){
 	echo "(7)Error on updating the database:\n".$conn->error;

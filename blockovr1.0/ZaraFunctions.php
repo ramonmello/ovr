@@ -33,9 +33,9 @@ class ZaraFunctions
         try {
 
             $sql = "SELECT ra.userid, u.department, u.lastaccess
-                FROM mdl_role_assignments ra
-                INNER JOIN mdl_user u ON u.id = ra.userid
-                INNER JOIN mdl_context co ON ra.contextid = co.id
+                FROM {role_assignments} ra
+                INNER JOIN {user} u ON u.id = ra.userid
+                INNER JOIN {context} co ON ra.contextid = co.id
                 WHERE co.contextlevel = 50
                     AND ra.roleid = 5
                     AND co.instanceid = {$courseId}
@@ -64,9 +64,9 @@ class ZaraFunctions
         try {
 
             $sql = "SELECT ra.userid, u.department, u.lastaccess
-                FROM mdl_role_assignments ra
-                INNER JOIN mdl_user u ON u.id = ra.userid
-                INNER JOIN mdl_context co ON ra.contextid = co.id
+                FROM {role_assignments} ra
+                INNER JOIN {user} u ON u.id = ra.userid
+                INNER JOIN {context} co ON ra.contextid = co.id
                 WHERE co.contextlevel = 50
                     AND ra.roleid = 5
                     AND co.instanceid = {$courseId}
@@ -96,9 +96,9 @@ class ZaraFunctions
         try {
 
             $sql = "SELECT ra.userid, u.department, u.lastaccess
-                FROM mdl_role_assignments ra
-                INNER JOIN mdl_user u ON u.id = ra.userid
-                INNER JOIN mdl_context co ON ra.contextid = co.id
+                FROM {role_assignments} ra
+                INNER JOIN {user} u ON u.id = ra.userid
+                INNER JOIN {context} co ON ra.contextid = co.id
                 WHERE co.contextlevel = 50
                     AND ra.roleid = 5
                     AND co.instanceid = {$courseId}
