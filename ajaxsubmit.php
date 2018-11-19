@@ -110,7 +110,7 @@ for($i=0;$i<count($urls);++$i){
 		onmouseover=\"colorStars(".$j.",".$i.",'yellow');this.style.fill='yellow';\" onmouseout=\"colorStars(stars[".$i."],".$i.",starColor);\" onClick=\"setStar(".$j.",".$i.");updateVideoRating(".$i.",".$j.")\"/>
 		</svg>";
 	}
-	$Content .="<div id=comentario>".$url[$i]."</div>";
+	$Content .="<div id=comentario></div>";
 	$content .= "<input id='".$i."STARN' type='textarea' size=4 value='0' style='border-width:0px;font-size:20px' disbled></input>";
 	$content = $content."</p></div>";
 }

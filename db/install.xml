@@ -32,7 +32,7 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="estrelaid" TYPE="int" LENGTH="6" NOTNULL="true" SEQUENCE="false" COMMENT="Id da tabela estrela"/>
-        <FIELD NAME="comentarios" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
+        <FIELD NAME="comentario" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="data do comentario"/>
       </FIELDS>
       <KEYS>
