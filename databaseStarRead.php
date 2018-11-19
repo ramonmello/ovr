@@ -13,7 +13,7 @@ require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
 global $DB;
 
-$urls = json_decode($_POST['urls'],true);//Each video url
+$urls = json_decode($_POST['urls'], true);//Each video url
 $totUrls = count($urls);//the amount of urls added
 
 /**

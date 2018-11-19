@@ -95,23 +95,24 @@ function getVideoRating(videosULRs){
 </script>";
 for($i=0;$i<count($urls);++$i){		
 	$content = $content.
-	"<p style=\"text-align: center;\">"
+	"<div style=\"text-align: center;\"><p>"
 	."<video width=480px height=360px controls=\"true\" src=\"".$urls[$i]."\">".$urls[$i]."</video>"
 	."<input type='hidden' id=".$i." value=".$urls[$i]." disabled>"
 	."</p>"
-	."<p style=\"text-align: center;\">"
+	."<p>"
 	.$names[$i]
 	."<br>"
 	."</p>";
-	$content = $content."<p style=\"text-align: center;\">";
+	$content = $content."<p>";
 	for($j=1;$j<=5;++$j){
 		$content = $content."<svg width='20' height='20'>
 		<polygon points=\"10,1 4,19.8 19,7.8 1,7.8 16,19.8\" id='".$i."STAR".$j."' style=\"fill:grey;\" 
 		onmouseover=\"colorStars(".$j.",".$i.",'yellow');this.style.fill='yellow';\" onmouseout=\"colorStars(stars[".$i."],".$i.",starColor);\" onClick=\"setStar(".$j.",".$i.");updateVideoRating(".$i.",".$j.")\"/>
 		</svg>";
 	}
+	$Content .="<div id=comentario>".$url[$i]."</div>";
 	$content .= "<input id='".$i."STARN' type='textarea' size=4 value='0' style='border-width:0px;font-size:20px' disbled></input>";
-	$content = $content."</p>";
+	$content = $content."</p></div>";
 }
 //Query 1 -> mdl_page
 

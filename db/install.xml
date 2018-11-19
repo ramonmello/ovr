@@ -28,5 +28,17 @@
         <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="faz referencia ao id da tabela user"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="comentarios" COMMENT="Comentarios de cada video">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="estrelaid" TYPE="int" LENGTH="6" NOTNULL="true" SEQUENCE="false" COMMENT="Id da tabela estrela"/>
+        <FIELD NAME="comentarios" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="data do comentario"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="estrelaid" TYPE="foreign" FIELDS="estrelaid" REFTABLE="estrela" REFFIELDS="id" COMMENT="faz referencia ao id da tabela estrela"/>
+      </KEYS>
+    </TABLE>
   </TABLES>
 </XMLDB>
