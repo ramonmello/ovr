@@ -7,7 +7,6 @@ Script that creates the page activities with the videos
 require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
 
-
 global $DB;
 
 $cfgovrmodules = get_config('block_ovr');
@@ -93,6 +92,35 @@ function getVideoRating(videosULRs){
 	xhttp.send('urls='+JSON.stringify(videosULRs));
 }
 </script>";
+$content .="
+<style>
+.timeline-wrapper {
+  width: 400px;
+  margin: auto auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.timeline-wrapper form {
+  width: 100%;
+  background: #e9f1f6;
+}
+
+.timeline-wrapper form textarea {
+  border: 3px solid #d8e5ed;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
+}
+
+.tweet-list {
+  list-style: none;
+  color: #1c2022;
+}
+</style>
+";
 for($i=0;$i<count($urls);++$i){		
 	$content = $content.
 	"<p>"
@@ -109,8 +137,12 @@ for($i=0;$i<count($urls);++$i){
 		</svg>";
 	}
 	$content .= "&emsp;<input id='".$i."STARN' type='textarea' size=4 value='0' style='border-width:0px;font-size:20px' disbled></input></div>";
-	$content .="<div id=comentario></div>";
+	$content .="<div class='timeline-wrapper' style=\"text-align: center;\" id=comentario><form action='../../blocks/ovr/addComentario.php' method='post'>
+  <textarea onKeyDown='handleInputChange();' rows='2' cols='45' placeholder='Comente...'></textarea><br>
+  <input class='btn-primary' type='submit' value='Enviar'>
+</form></div>";
 }
+
 //Query 1 -> mdl_page
 
 $record = new stdClass();
