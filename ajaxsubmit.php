@@ -94,30 +94,28 @@ function getVideoRating(videosULRs){
 </script>";
 $content .="
 <style>
-.timeline-wrapper {
-  width: 400px;
-  margin: auto auto;
-
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+#comment {
+	text-align: center;
 }
 
-.timeline-wrapper form {
-  width: 100%;
-  background: #e9f1f6;
+textarea {
+	width: 300px;
+	height: 50px;
+	border: 3px solid #d8e5ed;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: none;
 }
 
-.timeline-wrapper form textarea {
-  border: 3px solid #d8e5ed;
-  border-radius: 5px;
-  font-size: 14px;
-  resize: none;
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
 }
 
-.tweet-list {
-  list-style: none;
-  color: #1c2022;
+li {
+	text-align: center;
 }
 </style>
 ";
@@ -137,10 +135,15 @@ for($i=0;$i<count($urls);++$i){
 		</svg>";
 	}
 	$content .= "&emsp;<input id='".$i."STARN' type='textarea' size=4 value='0' style='border-width:0px;font-size:20px' disbled></input></div>";
-	$content .="<div class='timeline-wrapper' style=\"text-align: center;\" id=comentario><form action='../../blocks/ovr/addComentario.php' method='post'>
-  <textarea onKeyDown='handleInputChange();' rows='2' cols='45' placeholder='Comente...'></textarea><br>
-  <input class='btn-primary' type='submit' value='Enviar'>
-</form></div>";
+	$content .="<div id='comments'>
+								<form id='comment'>
+									<textarea name = 'comment' placeholder='Comente...'></textarea>
+								</form>
+	
+								<ul id='comment-list'></ul>
+	
+							</div>
+							<script src='./../../blocks/ovr/front-end/public/bundle.js'></script>";
 }
 
 //Query 1 -> mdl_page
@@ -225,7 +228,7 @@ if ($queryResult != NULL) {
 $queryResult = $DB->get_record_sql('SELECT id FROM {context} ORDER BY id DESC LIMIT 1', NULL);
 $lastID=-1;
 if ($queryResult != NULL) {
-	 echo JSON_encode($queryResult);
+	echo JSON_encode($queryResult);
 }else{
 	echo "(3)Error on updating the database:\n";
 	exit(3);

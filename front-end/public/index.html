@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/comment.css">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    #comment {
+      text-align: center;
+    }
+
+    textarea {
+      width: 300px;
+      height: 50px;
+      border: 3px solid #d8e5ed;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    
+    li {
+      text-align: center;
+    }
+  </style>
+  
+  <div id="comments">
+    <form id="comment">
+      <textarea name = "comment" placeholder="Comente..."></textarea>
+    </form>
+    
+    <ul id="comment-list"></ul>
+    
+  </div>
+  <script src="./bundle.js"></script>
+</body>
+</html>  
