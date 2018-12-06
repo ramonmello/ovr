@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,9 +7,10 @@
   <link rel="stylesheet" type="text/css" href="css/comment.css">
   <title>Document</title>
 </head>
+
 <body>
   <style>
-    #comment {
+    #commentblock {
       text-align: center;
     }
 
@@ -22,25 +24,40 @@
     }
 
     ul {
+      text-align: -webkit-center;
       list-style: none;
       margin: 0;
       padding: 0;
       font-family: sans-serif;
     }
-    
+
     li {
-      text-align: center;
+      padding: 20px 20px 0;
+      margin: 20px 0 0;
+      border-top: 1px solid #d8e5ed;
+      width: 300px;
     }
+
   </style>
-  
-  <div id="comments">
-    <form id="comment">
-      <textarea name = "comment" placeholder="Comente..."></textarea>
-    </form>
-    
-    <ul id="comment-list"></ul>
-    
+  <div id="commentblock">
+    <div id="comments">
+      <form>
+        <textarea id="0" name="comment" placeholder="Comente..."></textarea>
+      </form>
+
+      <ul id="comment-list"></ul>
+
+    </div>
+    <div id="comments">
+      <form>
+        <textarea id="1" name="comment" placeholder="Comente..."></textarea>
+      </form>
+
+      <ul id="comment-list"></ul>
+
+    </div>
   </div>
   <script src="./bundle.js"></script>
 </body>
-</html>  
+
+</html>
