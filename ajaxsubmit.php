@@ -94,12 +94,12 @@ function getVideoRating(videosULRs){
 </script>";
 $content .= "
 <style>
-#comment {
+#commentblock {
 	text-align: center;
 }
 
 textarea {
-	width: 300px;
+	width: 400px;
 	height: 50px;
 	border: 3px solid #d8e5ed;
 	border-radius: 5px;
@@ -108,6 +108,7 @@ textarea {
 }
 
 ul {
+	text-align: -webkit-center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -115,10 +116,16 @@ ul {
 }
 
 li {
-	text-align: center;
+	text-align: justify;
+	padding: 20px 20px 0;
+	margin: 20px 0 0;
+	border-top: 1px solid #d8e5ed;
+	width: 400px;
 }
+
 </style>
 ";
+$content .= "<div id='commentblock'>";
 for ($i = 0; $i < count($urls); ++$i) {
 	$content = $content . "<p>"
 		. "<div style=\"text-align: center;\">"
@@ -135,15 +142,16 @@ for ($i = 0; $i < count($urls); ++$i) {
 		</svg>";
 	}
 	$content .= "&emsp;<input id='" . $i . "STARN' type='textarea' size=4 value='0' style='border-width:0px;font-size:20px' disbled></input>";
-	$content .= "<div id=comment" . $i . ">
+	$content .= "<div>
 	<form id='comment'>
-	<textarea name = 'comment' placeholder='Comente...'></textarea>
+	<textarea id=" . $i . " name = 'comment' placeholder='Comente...'></textarea>
 	</form>
 	
 	<ul id='comment-list'></ul>
 	</div>
 	</div>";
 }
+$content .= "</div>";
 $content .= "<script src='./../../blocks/ovr/front-end/public/bundle.js'></script>";
 
 //Query 1 -> mdl_page

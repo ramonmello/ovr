@@ -9,7 +9,7 @@ class App {
 
   registerHandlers() {
     this.commentblock.onkeydown = e => {
-      //console.log(e.target.id);
+      console.log(e.target.id);
       this.handleNewTweet(e);
     }
   }
@@ -17,7 +17,7 @@ class App {
   handleNewTweet(e) {
     const id = e.target.id
     //this.textearea = document.querySelector['textearea[id=' + id];
-    console.log(this.textearea[id])
+
     if (e.keyCode !== 13) return
     const content = this.textearea[id].value;
 
