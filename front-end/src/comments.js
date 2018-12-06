@@ -9,7 +9,6 @@ class App {
 
   registerHandlers() {
     this.commentblock.onkeydown = e => {
-      console.log(e.target.id);
       this.handleNewTweet(e);
     }
   }
@@ -21,9 +20,9 @@ class App {
     if (e.keyCode !== 13) return
     const content = this.textearea[id].value;
 
-    // let xhr = new XMLHttpRequest();
-    // xhr.open('POST', '../../addComentario.php');
-    // xhr.send(content);
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '../../blocks/ovr/addComment.php');
+    xhr.send();
 
     this.render(content, id);
     this.textearea[id].value = '';
