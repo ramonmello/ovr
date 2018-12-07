@@ -3,9 +3,11 @@ class App {
     this.comments = [];
     this.listCo = document.querySelectorAll('ul[id=comment-list]');
     this.textearea = document.querySelectorAll('textarea[name=comment');
+    this.url = document.querySelectorAll('input[class=url]');
     this.video = document.querySelectorAll('video source');
     this.commentblock = document.getElementById('commentblock');
     this.registerHandlers();
+    this.list();
   }
 
   registerHandlers() {
@@ -14,14 +16,33 @@ class App {
     }
   }
 
+  list() {
+    for (var i = 0; i < this.url.length; i++) {
+      this.listComment(this.url[i].value, i);
+    }
+  }
+
+  listComment(url, id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var comments = JSON.parse(this.responseText);
+        for (var i = 0; i < comments.length; i++) {
+          this.render(comments[i], id);
+        }
+      }
+    };
+    xhttp.open('POST', '../../blocks/ovr/listComments.php', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send('url=' + url);
+  }
+
   sendNewComment(url, comment) {
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', '../../blocks/ovr/addComment.php', true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send('url=' + url + '&comment=' + comment);
   }
-
-
 
   handleNewComment(e) {
     const id = e.target.id
