@@ -3,26 +3,33 @@ class App {
     this.comments = [];
     this.listCo = document.querySelectorAll('ul[id=comment-list]');
     this.textearea = document.querySelectorAll('textarea[name=comment');
+    this.video = document.querySelectorAll('video source');
     this.commentblock = document.getElementById('commentblock');
     this.registerHandlers();
   }
 
   registerHandlers() {
     this.commentblock.onkeydown = e => {
-      this.handleNewTweet(e);
+      this.handleNewComment(e);
     }
   }
 
-  handleNewTweet(e) {
+  sendNewComment(url, comment) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '../../blocks/ovr/addComment.php', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send('url=' + url + '&comment=' + comment);
+  }
+
+
+
+  handleNewComment(e) {
     const id = e.target.id
-    //this.textearea = document.querySelector['textearea[id=' + id];
 
     if (e.keyCode !== 13) return
     const content = this.textearea[id].value;
 
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../blocks/ovr/addComment.php');
-    xhr.send();
+    this.sendNewComment(this.video[id].src, content);
 
     this.render(content, id);
     this.textearea[id].value = '';

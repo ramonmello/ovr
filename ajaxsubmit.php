@@ -130,7 +130,7 @@ for ($i = 0; $i < count($urls); ++$i) {
 	$content = $content . "<p>"
 		. "<div style=\"text-align: center;\">"
 		. "<video width=480px height=360px controls=\"true\" src=\"" . $urls[$i] . "\">" . $urls[$i] . "</video>"
-		. "<input type='hidden' id=" . $i . " value=" . $urls[$i] . " disabled>"
+		. "<input class= 'url' type='hidden' id=" . $i . " value=" . $urls[$i] . " disabled>"
 		. "</p>"
 
 		. $names[$i];

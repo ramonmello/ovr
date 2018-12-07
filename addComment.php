@@ -9,12 +9,12 @@ require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
 global $DB;
 
-$url = "http://138.121.71.4/material_1/regiane.mp4";//Url de cada video
-$comentario = "Comentário para testes";
+$url = $_POST['url'];//Url de cada video
+$comment = $_POST['comment'];
 
 $record = new stdClass();
 $record->url = $url;
-$record->comment = $comentario;
+$record->comment = $comment;
 
 $insert = -1;
 $insert = $DB->insert_record('comments_ovr', $record, true);

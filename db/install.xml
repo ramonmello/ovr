@@ -31,7 +31,7 @@
     <TABLE NAME="comments_ovr" COMMENT="Comentarios de cada video">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="url" TYPE="int" LENGTH="6" NOTNULL="true" SEQUENCE="false" COMMENT="Id da tabela estrela"/>
+        <FIELD NAME="url" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="url do vídeo"/>
         <FIELD NAME="comment" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
       </FIELDS>
       <KEYS>
