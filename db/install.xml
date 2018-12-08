@@ -32,7 +32,7 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="url" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="url do vídeo"/>
-        <FIELD NAME="comment" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
+        <FIELD NAME="comment" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false" COMMENT="comentario do video"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
