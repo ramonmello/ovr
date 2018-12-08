@@ -1,13 +1,52 @@
 class App {
   constructor() {
-    this.comments = [];
     this.listCo = document.querySelectorAll('ul[id=comment-list]');
     this.textearea = document.querySelectorAll('textarea[name=comment');
-    this.url = document.querySelectorAll('input[class=url]');
     this.video = document.querySelectorAll('video source');
+    this.urlInicil = document.querySelectorAll('input[class=url]');
     this.commentblock = document.getElementById('commentblock');
     this.registerHandlers();
     this.list();
+  }
+
+  list() {
+    for (var m = 0; m < this.video.length; m++) {
+      this.listComments(this.urlInicil[m].value);
+    }
+  }
+
+  listComments(url) {
+    const commentPromise = () => new Promise((resolve, reject) => {
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+
+          this.listCo = document.querySelectorAll('ul[id=comment-list]');
+          this.urlList = document.querySelectorAll(`input[value="${url}"]`);
+
+          for (var i = 0; i < res.length; i++) {
+            let p = document.createElement('p');
+            p.appendChild(document.createTextNode(res[i].comment));
+            let li = document.createElement('li');
+            li.setAttribute('class', 'li-comment');
+            li.appendChild(p);
+            this.listCo[this.urlList[0].id].appendChild(li);
+          }
+
+        }
+      };
+      xhr.open('POST', '../../blocks/ovr/listComments.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send('url=' + url);
+    });
+
+    async function executaPromise() {
+      await commentPromise();
+    }
+
+    executaPromise();
   }
 
   registerHandlers() {
@@ -16,32 +55,19 @@ class App {
     }
   }
 
-  list() {
-    for (var i = 0; i < this.url.length; i++) {
-      this.listComment(this.url[i].value, i);
-    }
-  }
-
-  listComment(url, id) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var comments = JSON.parse(this.responseText);
-        for (var i = 0; i < comments.length; i++) {
-          this.render(comments[i], id);
-        }
-      }
-    };
-    xhttp.open('POST', '../../blocks/ovr/listComments.php', true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send('url=' + url);
-  }
-
   sendNewComment(url, comment) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', '../../blocks/ovr/addComment.php', true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send('url=' + url + '&comment=' + comment);
+    const commentPromise = () => new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../../blocks/ovr/addComment.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send('url=' + url + '&comment=' + comment);
+    });
+
+    async function executaPromise() {
+      await commentPromise();
+    }
+
+    executaPromise();
   }
 
   handleNewComment(e) {
@@ -54,14 +80,14 @@ class App {
 
     this.render(content, id);
     this.textearea[id].value = '';
-  };
+  }
 
   render(content, id) {
-
     let p = document.createElement('p');
     p.appendChild(document.createTextNode(content));
 
     let li = document.createElement('li');
+    li.setAttribute('class', 'li-comment');
     li.appendChild(p);
 
     this.listCo[id].appendChild(li);
@@ -69,23 +95,3 @@ class App {
 }
 
 new App();
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-<div class='timeline-wrapper' style="text-align: center;">
-<form action='../../blocks/ovr/addComentario.php' method='post'>
-<textarea onKeyDown='handleInputChange();' rows='2' cols='45' placeholder='Comente...'></textarea><br>
-<input class='btn-primary' type='submit' value='Enviar'>
-</form>
-</div>
-*/

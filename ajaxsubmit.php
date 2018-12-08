@@ -107,7 +107,7 @@ textarea {
 	resize: none;
 }
 
-ul {
+#comment-list {
 	text-align: -webkit-center;
 	list-style: none;
 	margin: 0;
@@ -115,7 +115,7 @@ ul {
 	font-family: sans-serif;
 }
 
-li {
+.li-comment {
 	text-align: justify;
 	padding: 20px 20px 0;
 	margin: 20px 0 0;
