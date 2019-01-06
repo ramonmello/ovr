@@ -20,7 +20,7 @@ if($queryResult != NULL){
         $sql = "UPDATE {likes_ovr} set ovrlike=".(1)." WHERE url=\"".$url."\" AND userid=".$user;
     }
     else {
-        $sql = "UPDATE {likes_ovr} set ovrlike=".(-1)." WHERE url=\"".$url."\" AND userid=".$user;
+        $sql = "UPDATE {likes_ovr} set ovrlike=".(0)." WHERE url=\"".$url."\" AND userid=".$user;
     }
     
     if ($DB->execute($sql) === true) {
@@ -39,7 +39,7 @@ else {
         $record->ovrlike = 1;
     }
     else {
-        $record->ovrlike = -1;
+        $record->ovrlike = 0;
     }
     
     $insert = -1;

@@ -9,9 +9,17 @@ obs: Dessa vez tera que ser filtrado pelo usuario logado
 class Like {
   constructor() {
     this.like = document.getElementById('commentblock')
+    this.video = document.querySelectorAll('div input[class=url]')
     this.corLike = document.querySelectorAll('svg[id = like]')
     this.corDeslike = document.querySelectorAll('svg[id = deslike]')
     this.click()
+    this.load()
+  }
+
+  load() {
+    for($i = 0; $i < this.video.length; $i++) {
+      this.listLike(this.video[$i].defaultValue, $i)
+    }
   }
   
   click () {
@@ -21,11 +29,11 @@ class Like {
   }
   
   add_Like_Delike(e) {
-
+    
     let url = e.path[2].children[1].defaultValue
     let event = e.path[1].id
     let identLike = e.path[1].className.baseVal
-
+    
     if(event == 'like') {
       this.mudarCor(identLike, event)
       this.grava(url, event)
@@ -35,7 +43,7 @@ class Like {
       this.grava(url, event)
     }
   }
-
+  
   mudarCor(ident, event) {
     if(event == 'like') {
       this.corLike[ident].setAttribute('style', 'fill: #0066cc;')
@@ -46,7 +54,7 @@ class Like {
       this.corLike[ident].setAttribute('style', 'fill: #9999;')
     }
   }
-
+  
   grava(url, event) {
     const likePromise = () => new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
@@ -54,15 +62,44 @@ class Like {
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhr.send('url=' + url + '&event=' + event);
     });
-
+    
     async function executaPromise() {
       await likePromise();
     }
-
+    
+    executaPromise();
+  }
+  
+  listLike(url, ident) {
+    const likePromise = () => new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          
+          this.corLike = document.querySelectorAll('svg[id = like]')
+          this.corDeslike = document.querySelectorAll('svg[id = deslike]')
+          
+          if(res == 1) {
+            this.corLike[ident].setAttribute('style', 'fill: #0066cc;')
+            this.corDeslike[ident].setAttribute('style', 'fill: #9999;')
+          }
+          else {
+            this.corDeslike[ident].setAttribute('style', 'fill: #0066cc;')
+            this.corLike[ident].setAttribute('style', 'fill: #9999;')
+          }
+          
+        }
+      };
+      xhr.open('POST', '../../blocks/ovr/listLike.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send('url=' + url);
+    });
+    async function executaPromise() {
+      await likePromise();
+    }
     executaPromise();
   }
 }
 
 new Like();
-
-
