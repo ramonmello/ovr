@@ -8,24 +8,62 @@ obs: Dessa vez tera que ser filtrado pelo usuario logado
 */
 class Like {
   constructor() {
-    this.like = document.getElementById('commentblock');
-    this.click();
-    this.testes();
+    this.like = document.getElementById('commentblock')
+    this.corLike = document.querySelectorAll('svg[id = like]')
+    this.corDeslike = document.querySelectorAll('svg[id = deslike]')
+    this.click()
   }
-  testes() {
-    console.log(this.like)
-  } 
   
   click () {
     this.like.onclick = e => {
-      if(e.path[1].id == 'like') {
-        console.log(e)
-      }
-      if(e.path[1].id == 'deslike') {
-        console.log(e)
-      }
+      this.add_Like_Delike(e)
     }
+  }
+  
+  add_Like_Delike(e) {
+
+    let url = e.path[2].children[1].defaultValue
+    let event = e.path[1].id
+    let identLike = e.path[1].className.baseVal
+
+    if(event == 'like') {
+      this.mudarCor(identLike, event)
+      this.grava(url, event)
+    }
+    if(event == 'deslike') {
+      this.mudarCor(identLike, event)
+      this.grava(url, event)
+    }
+  }
+
+  mudarCor(ident, event) {
+    if(event == 'like') {
+      this.corLike[ident].setAttribute('style', 'fill: #0066cc;')
+      this.corDeslike[ident].setAttribute('style', 'fill: #9999;')
+    }
+    else {
+      this.corDeslike[ident].setAttribute('style', 'fill: #0066cc;')
+      this.corLike[ident].setAttribute('style', 'fill: #9999;')
+    }
+  }
+
+  grava(url, event) {
+    const likePromise = () => new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../../blocks/ovr/add_like_deslike.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send('url=' + url + '&event=' + event);
+    });
+
+    async function executaPromise() {
+      await likePromise();
+    }
+
+    executaPromise();
   }
 }
 
+
 new Like();
+
+

@@ -41,6 +41,7 @@
         <TABLE NAME="likes_ovr" COMMENT="likes de cada video">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="6" NOTNULL="true" SEQUENCE="false" COMMENT="Id da tabele user"/>
         <FIELD NAME="url" TYPE="char" LENGTH="250" NOTNULL="true" SEQUENCE="false" COMMENT="url do vídeo"/>
         <FIELD NAME="like" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="like do video"/>
         <FIELD NAME="deslike" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="deslike do video"/>
