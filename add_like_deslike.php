@@ -4,29 +4,49 @@
 @date 02/01/2019
 */
 
-
 require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
-global $DB;
+global $DB, $USER;
 
 $url = $_POST['url'];//Url de cada video
 $event = $_POST['event'];
 
-//$userid = $USER->id;
+$user = $USER->id;
 
-//$queryResult = $DB->get_record_select("likes_ovr", "url=\"".$url."\" AND userid=".$userid);
+$queryResult = $DB->get_record_select("likes_ovr", "url=\"".$url."\" AND userid=".$user);
 
-//if($queryResult == NULL AND $event == 'like'){
+if($queryResult != NULL){
+    if($event == 'like'){
+        $sql = "UPDATE {likes_ovr} set ovrlike=".(1)." WHERE url=\"".$url."\" AND userid=".$user;
+    }
+    else {
+        $sql = "UPDATE {likes_ovr} set ovrlike=".(-1)." WHERE url=\"".$url."\" AND userid=".$user;
+    }
+    
+    if ($DB->execute($sql) === true) {
+        
+    } else {
+        echo "(1)Error on updating the database:\n";
+        exit(1);
+    }
+}
+else {
     
     $record = new stdClass();
-    $record->userid = $userid;
+    $record->userid = $user;
     $record->url = $url;
-    $record->like = 1;
+    if($event == 'like') {
+        $record->ovrlike = 1;
+    }
+    else {
+        $record->ovrlike = -1;
+    }
     
     $insert = -1;
     $insert = $DB->insert_record('likes_ovr', $record, true);
     if ($insert === -1) {
-        echo "(1)Error on updating the database:\n";
-        exit(1);
+        echo "(2)Error on updating the database:\n";
+        exit(2);
     }
-//}
+    
+}
