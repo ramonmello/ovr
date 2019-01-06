@@ -46,11 +46,11 @@ class Like {
   
   mudarCor(ident, event) {
     if(event == 'like') {
-      this.corLike[ident].setAttribute('style', 'fill: #0066cc;')
+      this.corLike[ident].setAttribute('style', 'fill: #33ccff')
       this.corDeslike[ident].setAttribute('style', 'fill: #9999;')
     }
     else {
-      this.corDeslike[ident].setAttribute('style', 'fill: #0066cc;')
+      this.corDeslike[ident].setAttribute('style', 'fill: #33ccff')
       this.corLike[ident].setAttribute('style', 'fill: #9999;')
     }
   }
@@ -81,11 +81,11 @@ class Like {
           this.corDeslike = document.querySelectorAll('svg[id = deslike]')
           
           if(res == 1) {
-            this.corLike[ident].setAttribute('style', 'fill: #0066cc;')
+            this.corLike[ident].setAttribute('style', 'fill: #33ccff')
             this.corDeslike[ident].setAttribute('style', 'fill: #9999;')
           }
           else {
-            this.corDeslike[ident].setAttribute('style', 'fill: #0066cc;')
+            this.corDeslike[ident].setAttribute('style', 'fill: #33ccff')
             this.corLike[ident].setAttribute('style', 'fill: #9999;')
           }
           
